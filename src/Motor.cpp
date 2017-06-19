@@ -18,6 +18,7 @@ Motor::Motor() {
 }
 
 Motor::Motor(Cabina c, float speed) {
+	cabina = c;
 	deltaHight =1.0;
 	UP=0;
 	DOWN = 1;
