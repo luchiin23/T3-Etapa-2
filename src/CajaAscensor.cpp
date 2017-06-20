@@ -20,18 +20,18 @@ CajaAscensor::~CajaAscensor() {
 	// TODO Auto-generated destructor stub
 }
 
-Sensor CajaAscensor::findSensor(float position){
-	Sensor x;
+void CajaAscensor::findSensor(Sensor &ref, float position){
+
 	//cout << "find sensor";
 	vector<Sensor>::iterator it;
 	for (it=sensores.begin();it!=sensores.end();++it){
 		//cout << it->getPosition()<<endl;
 		//cout << i << endl;
 		if (it->isInRange(position)){
-			Sensor* found = new Sensor();
-			return *found;
+			*ref=it._M_current;
+			//return ref;
 			break;
 		}
 	}
-	return x;
+	//return ref;
 }

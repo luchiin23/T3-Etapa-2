@@ -16,7 +16,7 @@ public:
 	CajaAscensor(std::vector <Sensor>);
 	CajaAscensor();
 	virtual ~CajaAscensor();
-	Sensor findSensor(float);
+	void findSensor(Sensor&, float);
 
 private:
 	std::vector<Sensor> sensores;

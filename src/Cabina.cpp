@@ -26,9 +26,10 @@ Cabina::~Cabina() {
 	// TODO Auto-generated destructor stub
 }
 
-void Cabina::move(float delta){
+void Cabina::move(Sensor &ref, float delta){
 	position += delta;
-	shaft.findSensor(position);
+	shaft.findSensor(ref, position);
+	Cabina::setFloor(ref.getFloor());
 	//cout << "found" << endl;
 }
 

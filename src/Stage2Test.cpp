@@ -35,12 +35,14 @@ int main(int argc, char* argv[]){
 }*/
 
       int tiempo=0;
+      Sensor ref(0,0);
       motor.lift();
-      while((cabina.readFloor()< numpisos) || (cabina.getPosition()<100)){
-    	  motor.muevete();
+      while((cabina.readFloor()< numpisos) && (cabina.getPosition()<100)){
+    	  motor.muevete(ref);
     	  cout << "read floor: ";cout << cabina.readFloor() << endl;
     	  cout << "cab pose: ";cout << cabina.getPosition() << endl;
     	  tiempo+=2;
+    	  usleep(10);
       }
       motor.lower();
       /*while(cabina.readFloor()> 1){

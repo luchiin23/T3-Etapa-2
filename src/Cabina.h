@@ -17,7 +17,7 @@ public:
 	Cabina(CajaAscensor,float,int);
 	Cabina(void);
 	virtual ~Cabina();
-	void move(float);
+	void move(Sensor&, float);
 	int readFloor(void);
 	float getPosition(void);
 	void setFloor(int);

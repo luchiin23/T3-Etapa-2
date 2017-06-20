@@ -14,7 +14,7 @@ class Motor {
 private:
 
 public:
-	Motor(Cabina,float);
+	Motor(Cabina&,float);
 	Motor();
 	virtual ~Motor();
 	int UP;
@@ -27,9 +27,9 @@ public:
 	void stop();
 	void pause();
 	int getState();
-	void muevete();
+	void muevete(Sensor&);
 private:
-	Cabina cabina;
+	Cabina* cabina;
 	float deltaHight;
 
 };

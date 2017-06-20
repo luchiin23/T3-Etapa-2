@@ -32,8 +32,10 @@ Sensor::~Sensor() {
 float Sensor::getPosition(){
 	return this->position;
 }
+int Sensor::getFloor(){
+	return this->floorheight;
+}
 bool Sensor::isInRange(float h){
-	cout <<"is in range" << endl;
 	if(((position-0.5)<h) & (h<(position+0.5))){
 		activateAction();
 		return true;

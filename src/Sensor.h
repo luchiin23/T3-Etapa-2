@@ -23,6 +23,7 @@ public:
 	void deactivateAction(void);
 	int isActivated(void);
 	float getPosition(void);
+	int getFloor(void);
 
 };
 

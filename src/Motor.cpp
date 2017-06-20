@@ -9,6 +9,7 @@
 using namespace std;
 
 Motor::Motor() {
+	cabina =NULL;
 	deltaHight =1.0;
 	UP=0;
 	DOWN = 1;
@@ -17,8 +18,8 @@ Motor::Motor() {
 	state = STOPPED;
 }
 
-Motor::Motor(Cabina c, float speed) {
-	cabina = c;
+Motor::Motor(Cabina &c, float speed) {
+	cabina = &c;
 	deltaHight =speed;
 	UP=0;
 	DOWN = 1;
@@ -48,13 +49,13 @@ void Motor::pause() {
 int Motor::getState(){
       return state;
 }
-void Motor::muevete(){
+void Motor::muevete(Sensor &rr){
 	cout << "cabina: ";
-	cout << cabina.getPosition()<<endl;
+	cout << cabina->getPosition()<<endl;
       switch (state) {
-         case 0: cabina.move(deltaHight);
+         case 0: cabina->move(rr,deltaHight);
                   break;
-         case 1: cabina.move(-deltaHight);
+         case 1: cabina->move(rr,-deltaHight);
                   break;
          default:
         	 cout << "En pausa o detenido" <<endl;
