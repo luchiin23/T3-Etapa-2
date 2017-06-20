@@ -50,8 +50,8 @@ int Motor::getState(){
       return state;
 }
 void Motor::muevete(Sensor &rr){
-	cout << "cabina: ";
-	cout << cabina->getPosition()<<endl;
+	//cout << "cabina: ";
+	//cout << cabina->getPosition()<<endl;
       switch (state) {
          case 0: cabina->move(rr,deltaHight);
                   break;

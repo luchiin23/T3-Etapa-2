@@ -24,14 +24,14 @@ void CajaAscensor::findSensor(Sensor &ref, float position){
 
 	//cout << "find sensor";
 	vector<Sensor>::iterator it;
+	int i =0;
 	for (it=sensores.begin();it!=sensores.end();++it){
 		//cout << it->getPosition()<<endl;
 		//cout << i << endl;
 		if (it->isInRange(position)){
-			*ref=it._M_current;
-			//return ref;
+			ref=sensores[i];
 			break;
 		}
+		i+=1;
 	}
-	//return ref;
 }

@@ -36,7 +36,7 @@ int Sensor::getFloor(){
 	return this->floorheight;
 }
 bool Sensor::isInRange(float h){
-	if(((position-0.5)<h) & (h<(position+0.5))){
+	if(((position-0.1)<h) & (h<(position+0.1))){
 		activateAction();
 		return true;
 	}

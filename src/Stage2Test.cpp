@@ -7,6 +7,7 @@
 #include "Cabina.h"
 #include "Motor.h"
 #include <unistd.h>
+#include <string>
 
 using namespace std;
 
@@ -26,57 +27,44 @@ int main(int argc, char* argv[]){
       }
       CajaAscensor caja(sensores);
       Cabina cabina(caja,0.0,1);
-      Motor motor(cabina,0.02f);
-      /*vector<Sensor>::iterator it;
-      for (it=sensores.begin();it!=sensores.end();++it){
-    	  cout << it->getPosition()<<endl;
-      }
-      return 0;
-}*/
+      Motor motor(cabina,0.1f);
 
-      int tiempo=0;
+      float tiempo=0.0;
       Sensor ref(0,0);
       motor.lift();
-      while((cabina.readFloor()< numpisos) && (cabina.getPosition()<100)){
+      int pisotemp=0;
+      string sense;
+      cout << "Tiempo\tAltura\tSensores" << endl;
+      while((cabina.readFloor()< numpisos)){
     	  motor.muevete(ref);
-    	  cout << "read floor: ";cout << cabina.readFloor() << endl;
-    	  cout << "cab pose: ";cout << cabina.getPosition() << endl;
-    	  tiempo+=2;
-    	  usleep(10);
+    	  if (cabina.readFloor() != pisotemp){
+    		  pisotemp = cabina.readFloor();
+    		  for(unsigned int ii=0;ii<sensores.size();ii++){
+    			  sense+=sensores[ii].isActivated()?"1":"0";
+    		  }
+    		  cout << tiempo; cout << '\t' ;cout << cabina.getPosition();
+    		  cout << '\t' ; cout << sense << endl;
+    		  sense ="";
+    	  }
+    	  tiempo+=0.15;
       }
+
       motor.lower();
-      /*while(cabina.readFloor()> 1){
-    	  motor.muevete();
-      }*/
-
+      while(cabina.readFloor()> 1){
+    	  motor.muevete(ref);
+    	  if (cabina.readFloor() != pisotemp){
+    		  pisotemp = cabina.readFloor();
+    		  for(unsigned int ii=0;ii<sensores.size();ii++){
+    			  sense+=sensores[ii].isActivated()?"1":"0";
+			  }
+    		  cout << tiempo; cout << '\t' ;cout << cabina.getPosition();
+			  cout << '\t' ; cout << sense << endl;
+			  sense="";
+    	  }
+    	  tiempo+=0.15;
+      }
       return 0;
-
-}
-/* Elevator parameters
-int numPisos = 8;
-float floorHight = 3.0f; // meters
-
-// create elevator
-ArrayList<Sensor> sensores = new ArrayList<Sensor> ();
-CajaAscensor caja = new CajaAscensor(sensores);
-Cabina cabina = new Cabina(bc, caja);
-for (int i=0; i < numPisos; i++) {
-   sensores.add(new Sensor(i*floorHight,i+1, controlUnit));
 }
 
-// commands needed to lift and descend the evelator between
-// the first and last floor.
-
-float deltaHight = 0.02f;  // 2 [cm] each time
-while(cabina.readFloorIndicator()< numPisos)
-    cabina.move(deltaHight);
-while(cabina.readFloorIndicator()> 1)
-   cabina.move(-deltaHight);
-while(cabina.readFloorIndicator()< numPisos)
-   cabina.move(deltaHight);
-while(cabina.readFloorIndicator()> 1)
-   cabina.move(-deltaHight);
-
-*/
 
 
