@@ -14,14 +14,27 @@ Sensor::Sensor(float pos, int piso) {
 	floorheight = piso;
 	active = false;
 }
+Sensor::Sensor(const Sensor& ref){
+	position = ref.position;
+	floorheight = ref.floorheight;
+	active = ref.active;
+}
+Sensor::Sensor(){
+	position = 1000;
+	floorheight = 1000;
+	active = false;
+}
 
 Sensor::~Sensor() {
 	// TODO Auto-generated destructor stub
 }
 
-
+float Sensor::getPosition(){
+	return this->position;
+}
 bool Sensor::isInRange(float h){
-	if(((position-0.05)<h) & (h<(position+0.05))){
+	cout <<"is in range" << endl;
+	if(((position-0.5)<h) & (h<(position+0.5))){
 		activateAction();
 		return true;
 	}
@@ -39,3 +52,7 @@ void Sensor::deactivateAction(void){
 	active = false;
 }
 
+int Sensor::isActivated(){
+       // to be completed
+	   return active?1:0;//return active;
+}

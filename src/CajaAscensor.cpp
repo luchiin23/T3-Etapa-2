@@ -21,31 +21,17 @@ CajaAscensor::~CajaAscensor() {
 }
 
 Sensor CajaAscensor::findSensor(float position){
-	Sensor *found = NULL;
-	for (unsigned int i=0;i<sensores.size();i++){
-		if (sensores[i].isInRange(position)){
-			*found = CajaAscensor::sensores[i];
+	Sensor x;
+	//cout << "find sensor";
+	vector<Sensor>::iterator it;
+	for (it=sensores.begin();it!=sensores.end();++it){
+		//cout << it->getPosition()<<endl;
+		//cout << i << endl;
+		if (it->isInRange(position)){
+			Sensor* found = new Sensor();
+			return *found;
 			break;
 		}
 	}
-	return *found;
+	return x;
 }
-/*
-public class CajaAscensor {
-   private ArrayList <Sensor> sensores;
-   public CajaAscensor (ArrayList<Sensor> ss) {
-      sensores = ss;
-   }
-   public Sensor findSensor(float position) {
-	   	Sensor encontrado = null;
-	    for(int i=0;i<sensores.size();i++){
-	    	if (sensores.get(i).isInRange(position)){
-	    		encontrado = sensores.get(i);
-	    		break;
-	    	}
-
-	    }
-	    return encontrado;
-   }
-}
-*/

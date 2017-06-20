@@ -4,46 +4,77 @@
 #include "BotoneraPrimerPiso.h"
 #include "BotoneraPisoIntermedio.h"
 #include "BotoneraUltimoPiso.h"
+#include "Cabina.h"
+#include "Motor.h"
+#include <unistd.h>
+
 using namespace std;
 
 int main(int argc, char* argv[]){
-        // Creación botoneras
+      int numpisos=4;
+      float floorHeight=3.0f;
 
       BotoneraPrimerPiso bp1;
       BotoneraPisoIntermedio bp2;
       BotoneraPisoIntermedio bp3;
       BotoneraUltimoPiso bp4;
 
-        // Lectura archivo
-      ifstream file(argv[1]);
+      vector <Sensor> sensores;
 
-      int time=-1, piso;
-      char accion;
-      while(!file.eof()){
-         if (time>0)   {  // reset previous request
-            bp1.resetUpRequest();
-            bp2.resetUpRequest(); bp2.resetDownRequest();
-            bp3.resetUpRequest(); bp3.resetDownRequest();
-            bp4.resetDownRequest();
-          }
-          file >> time >> piso >> accion; // read first event
-                  // excecute new event
-          switch (piso){
-               case 1: bp1.setRequest(accion);
-                       break;
-               case 2: bp2.setRequest(accion);
-                       break;
-               case 3: bp3.setRequest(accion);
-                       break;
-               case 4: bp4.setRequest(accion);
-                       break;
-          }
+      for (int i=0;i<numpisos;i++){
+    	  sensores.push_back(Sensor(i*floorHeight,i+1));
+      }
+      CajaAscensor caja(sensores);
+      Cabina cabina(caja,0.0,1);
+      Motor motor(cabina,0.02f);
+      /*vector<Sensor>::iterator it;
+      for (it=sensores.begin();it!=sensores.end();++it){
+    	  cout << it->getPosition()<<endl;
+      }
+      return 0;
+}*/
 
-             // show buttons's state
-          if( file.eof() ) break;//don't repeat last line
-          cout << time << ", " << bp1.isUpOn() << bp2.isUpOn() << bp3.isUpOn() << "-, -" << bp2.isDownOn() << bp3.isDownOn() << bp4.isDownOn() << endl;
-       }
+      int tiempo=0;
+      motor.lift();
+      while((cabina.readFloor()< numpisos) || (cabina.getPosition()<100)){
+    	  motor.muevete();
+    	  cout << "read floor: ";cout << cabina.readFloor() << endl;
+    	  cout << "cab pose: ";cout << cabina.getPosition() << endl;
+    	  tiempo+=2;
+      }
+      motor.lower();
+      /*while(cabina.readFloor()> 1){
+    	  motor.muevete();
+      }*/
 
       return 0;
 
 }
+/* Elevator parameters
+int numPisos = 8;
+float floorHight = 3.0f; // meters
+
+// create elevator
+ArrayList<Sensor> sensores = new ArrayList<Sensor> ();
+CajaAscensor caja = new CajaAscensor(sensores);
+Cabina cabina = new Cabina(bc, caja);
+for (int i=0; i < numPisos; i++) {
+   sensores.add(new Sensor(i*floorHight,i+1, controlUnit));
+}
+
+// commands needed to lift and descend the evelator between
+// the first and last floor.
+
+float deltaHight = 0.02f;  // 2 [cm] each time
+while(cabina.readFloorIndicator()< numPisos)
+    cabina.move(deltaHight);
+while(cabina.readFloorIndicator()> 1)
+   cabina.move(-deltaHight);
+while(cabina.readFloorIndicator()< numPisos)
+   cabina.move(deltaHight);
+while(cabina.readFloorIndicator()> 1)
+   cabina.move(-deltaHight);
+
+*/
+
+

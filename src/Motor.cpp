@@ -19,7 +19,7 @@ Motor::Motor() {
 
 Motor::Motor(Cabina c, float speed) {
 	cabina = c;
-	deltaHight =1.0;
+	deltaHight =speed;
 	UP=0;
 	DOWN = 1;
 	PAUSED = 2;
@@ -49,6 +49,8 @@ int Motor::getState(){
       return state;
 }
 void Motor::muevete(){
+	cout << "cabina: ";
+	cout << cabina.getPosition()<<endl;
       switch (state) {
          case 0: cabina.move(deltaHight);
                   break;
