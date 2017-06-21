@@ -13,13 +13,13 @@
 
 class CajaAscensor {
 public:
-	CajaAscensor(std::vector <Sensor>);
-	CajaAscensor();
-	virtual ~CajaAscensor();
-	void findSensor(Sensor&, float);
+	CajaAscensor(std::vector<Sensor> &);
+	CajaAscensor(void);
+	virtual ~CajaAscensor(void);
+	void findSensor(int &,float);
 
 private:
-	std::vector<Sensor> sensores;
+	std::vector<Sensor> *sensores;
 
 };
 

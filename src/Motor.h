@@ -27,7 +27,7 @@ public:
 	void stop();
 	void pause();
 	int getState();
-	void muevete(Sensor&);
+	void muevete(int&);
 private:
 	Cabina* cabina;
 	float deltaHight;

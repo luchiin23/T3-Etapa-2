@@ -36,7 +36,7 @@ int Sensor::getFloor(){
 	return this->floorheight;
 }
 bool Sensor::isInRange(float h){
-	if(((position-0.1)<h) & (h<(position+0.1))){
+	if(((position-0.05)<h) & (h<(position+0.05))){
 		activateAction();
 		return true;
 	}
@@ -54,7 +54,7 @@ void Sensor::deactivateAction(void){
 	active = false;
 }
 
-int Sensor::isActivated(){
+bool Sensor::isActivated(){
        // to be completed
-	   return active?1:0;//return active;
+	   return active?true:false;//return active;
 }

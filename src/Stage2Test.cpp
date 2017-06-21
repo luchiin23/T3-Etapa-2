@@ -26,15 +26,16 @@ int main(int argc, char* argv[]){
     	  sensores.push_back(Sensor(i*floorHeight,i+1));
       }
       CajaAscensor caja(sensores);
-      Cabina cabina(caja,0.0,1);
-      Motor motor(cabina,0.1f);
+      Cabina cabina(caja,0.0f,1);
+      Motor motor(cabina,0.2);
 
       float tiempo=0.0;
-      Sensor ref(0,0);
       motor.lift();
-      int pisotemp=0;
+      int pisotemp=0, ref = cabina.readFloor();
       string sense;
-      cout << "Tiempo\tAltura\tSensores" << endl;
+      cout << "Tiempo\tPiso\tAltura\tSensores" << endl;
+
+
       while((cabina.readFloor()< numpisos)){
     	  motor.muevete(ref);
     	  if (cabina.readFloor() != pisotemp){
@@ -42,26 +43,28 @@ int main(int argc, char* argv[]){
     		  for(unsigned int ii=0;ii<sensores.size();ii++){
     			  sense+=sensores[ii].isActivated()?"1":"0";
     		  }
-    		  cout << tiempo; cout << '\t' ;cout << cabina.getPosition();
+    		  cout << tiempo; cout << '\t' ;cout << cabina.readFloor();
+    		  cout <<'\t'; cout << cabina.getPosition();
     		  cout << '\t' ; cout << sense << endl;
     		  sense ="";
     	  }
-    	  tiempo+=0.15;
+    	  tiempo+=0.3;
       }
 
       motor.lower();
       while(cabina.readFloor()> 1){
     	  motor.muevete(ref);
-    	  if (cabina.readFloor() != pisotemp){
-    		  pisotemp = cabina.readFloor();
-    		  for(unsigned int ii=0;ii<sensores.size();ii++){
-    			  sense+=sensores[ii].isActivated()?"1":"0";
+		  if (cabina.readFloor() != pisotemp){
+			  pisotemp = cabina.readFloor();
+			  for(unsigned int ii=0;ii<sensores.size();ii++){
+				  sense+=sensores[ii].isActivated()?"1":"0";
 			  }
-    		  cout << tiempo; cout << '\t' ;cout << cabina.getPosition();
+			  cout << tiempo; cout << '\t' ;cout << cabina.readFloor();
+			  cout <<'\t'; cout << cabina.getPosition();
 			  cout << '\t' ; cout << sense << endl;
-			  sense="";
-    	  }
-    	  tiempo+=0.15;
+			  sense ="";
+		  }
+		  tiempo+=0.3;
       }
       return 0;
 }

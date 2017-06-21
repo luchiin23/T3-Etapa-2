@@ -21,7 +21,7 @@ public:
 	bool isInRange(float);
 	void activateAction(void);
 	void deactivateAction(void);
-	int isActivated(void);
+	bool isActivated(void);
 	float getPosition(void);
 	int getFloor(void);
 

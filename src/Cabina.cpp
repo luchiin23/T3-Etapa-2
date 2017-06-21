@@ -26,14 +26,15 @@ Cabina::~Cabina() {
 	// TODO Auto-generated destructor stub
 }
 
-void Cabina::move(Sensor &ref, float delta){
+void Cabina::move(int &sensorpiso, float delta){
+	shaft.findSensor(sensorpiso,position);
+	Cabina::setFloor(sensorpiso);
 	position += delta;
-	shaft.findSensor(ref, position);
-	Cabina::setFloor(ref.getFloor());
-	//cout << "found" << endl;
 }
 
 float Cabina::getPosition(){
+	if (position<0.1)
+		position = 0;
 	return position;
 }
 
@@ -44,31 +45,3 @@ void Cabina::setFloor(int floor){
 int Cabina::readFloor(){
 	return floorIndicator;
 }
-/*
- *  public Cabina (BotoneraCabina bc, CajaAscensor caja) {
-      Random generator = new Random();
-      botonera = bc;
-      shaft = caja;
-      position = generator.nextFloat();   //it starts between 0 an 1 [m]
-      floorIndicator=1;
-   }
-   public void move(float delta) {
-      // to be completed
-	  Sensor sensor;
-	  position+=delta;
-	  sensor=shaft.findSensor(position);
-	  // to be completed by you.
-	  lastSensor=sensor;
-   }
-   public float getPosition(){
-      return position;
-   }
-   public void setFloorIndicator (int floor){
-      floorIndicator = floor;
-   }
-   public int readFloorIndicator() {
-      return floorIndicator;
-   }
-}
-*/
- //*/

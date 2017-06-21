@@ -9,29 +9,24 @@
 
 using namespace std;
 
-CajaAscensor::CajaAscensor(vector <Sensor> ss) {
-	sensores = ss;
+CajaAscensor::CajaAscensor(vector <Sensor> &ss) {
+	sensores = &ss;
 }
 
 CajaAscensor::CajaAscensor() {
+	sensores = NULL;
 }
 
 CajaAscensor::~CajaAscensor() {
 	// TODO Auto-generated destructor stub
 }
 
-void CajaAscensor::findSensor(Sensor &ref, float position){
-
-	//cout << "find sensor";
+void CajaAscensor::findSensor(int &i,float position){
 	vector<Sensor>::iterator it;
-	int i =0;
-	for (it=sensores.begin();it!=sensores.end();++it){
-		//cout << it->getPosition()<<endl;
-		//cout << i << endl;
+	for (it=sensores->begin();it!=sensores->end();++it){
 		if (it->isInRange(position)){
-			ref=sensores[i];
+			i = it->getFloor();
 			break;
 		}
-		i+=1;
 	}
 }

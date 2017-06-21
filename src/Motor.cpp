@@ -49,9 +49,7 @@ void Motor::pause() {
 int Motor::getState(){
       return state;
 }
-void Motor::muevete(Sensor &rr){
-	//cout << "cabina: ";
-	//cout << cabina->getPosition()<<endl;
+void Motor::muevete(int &rr){
       switch (state) {
          case 0: cabina->move(rr,deltaHight);
                   break;
